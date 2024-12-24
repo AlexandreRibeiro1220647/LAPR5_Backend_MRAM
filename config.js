@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import { MedicalCondition } from './src/domain/MedicalCondition/medicalCondition';
 
 // Set the NODE_ENV to 'development' by default
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -48,6 +49,10 @@ export default {
     allergy: {
       name: "AllergyController",
       path: "../controllers/allergyController"
+    },
+    medicalCondition: {
+      name: "MedicalConditionController",
+      path: "../controllers/MedicalConditionController"
     }
   },
 
@@ -63,6 +68,10 @@ export default {
     allergy: {
       name: "AllergyRepo",
       path: "../repos/allergyRepo"
+    },
+    medicalCondition: {
+      name: "MedicalConditionRepo",
+      path: "../repos/medicalConditionRepo"
     }
   },
 
@@ -74,6 +83,10 @@ export default {
     allergy: {
       name: "AllergyService",
       path: "../services/allergyService"
+    },
+    medicalCondition: {
+      name: "MedicalConditionService",
+      path: "../services/medicalConditionService"
     }
   },
 };

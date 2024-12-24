@@ -27,6 +27,12 @@ export default async ({ expressApp }) => {
     schema: '../persistence/schemas/allergySchema',
   };
 
+  const medicalConditionSchema = {
+    // compare with the approach followed in repos and services
+    name: 'medicalConditionSchema',
+    schema: '../persistence/schemas/medicalConditionSchema',
+  };
+
   const roleController = {
     name: config.controllers.role.name,
     path: config.controllers.role.path
@@ -35,6 +41,11 @@ export default async ({ expressApp }) => {
   const allergyController = {
     name: config.controllers.allergy.name,
     path: config.controllers.allergy.path
+  }
+
+  const medicalConditionController = {
+    name: config.controllers.medicalCondition.name,
+    path: config.controllers.medicalCondition.path
   }
 
   const roleRepo = {
@@ -52,6 +63,11 @@ export default async ({ expressApp }) => {
     path: config.repos.allergy.path
   }
 
+  const medicalConditionRepo = {
+    name: config.repos.medicalCondition.name,
+    path: config.repos.medicalCondition.path
+  }
+
   const roleService = {
     name: config.services.role.name,
     path: config.services.role.path
@@ -62,25 +78,34 @@ export default async ({ expressApp }) => {
     path: config.services.allergy.path
   }
 
+  const medicalConditionService = {
+    name: config.services.medicalCondition.name,
+    path: config.services.medicalCondition.path
+  }
+
   await dependencyInjectorLoader({
     mongoConnection,
     schemas: [
       userSchema,
       roleSchema,
-      allergySchema
+      allergySchema,
+      medicalConditionSchema
     ],
     controllers: [
       roleController,
-      allergyController
+      allergyController,
+      medicalConditionController
     ],
     repos: [
       roleRepo,
       userRepo,
-      allergyRepo
+      allergyRepo,
+      medicalConditionRepo
     ],
     services: [
       roleService,
-      allergyService
+      allergyService,
+      medicalConditionService
     ]
   });
   Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
