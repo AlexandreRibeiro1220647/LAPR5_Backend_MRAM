@@ -34,7 +34,7 @@ export class MedicalCondition extends AggregateRoot<MedicalConditionProps> {
   }
 
   get commonSymptoms (): string {
-    return this.props.description;
+    return this.props.commonSymptoms;
   }
 
   set designation ( value: string) {
@@ -46,7 +46,7 @@ export class MedicalCondition extends AggregateRoot<MedicalConditionProps> {
   }
 
   set commonSymptoms ( value: string) {
-    this.props.description = value;
+    this.props.commonSymptoms = value;
   }
 
   private constructor (props: MedicalConditionProps, id?: UniqueEntityID) {

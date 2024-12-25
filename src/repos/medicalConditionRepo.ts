@@ -49,7 +49,7 @@ export default class MedicalConditionRepo implements IMedicalConditionRepo {
         medicalConditionDocument.code = medicalCondition.code;
         medicalConditionDocument.designation = medicalCondition.designation;
         medicalConditionDocument.description = medicalCondition.description;
-        medicalConditionDocument.commonSymptoms = medicalCondition.commonSymptoms
+        medicalConditionDocument.commonSymptoms = medicalCondition.commonSymptoms;
         await medicalConditionDocument.save();
 
         return medicalCondition;
