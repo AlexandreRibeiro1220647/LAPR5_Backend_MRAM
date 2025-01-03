@@ -17,25 +17,25 @@ export default class AllergyController implements IAllergyController /* TODO: ex
   public async getAllergies(req: Request, res: Response, next: NextFunction) {
     try {
       const allergiesOrError = await this.allergyServiceInstance.getAllergies() as Result<IAllergyDTO[]>;
-
+  
       if (allergiesOrError.isFailure) {
-        return res.status(404).send();
+        return res.status(404).json({ message: "Get failed" }); 
       }
-
+  
       const allergyDTOResults = allergiesOrError.getValue();
-      return res.status(200).json( allergyDTOResults );
+      return res.status(200).json(allergyDTOResults);
     }
     catch (e) {
       return next(e);
     }
-  };
-
+  }
+  
   public async createAllergy(req: Request, res: Response, next: NextFunction) {
     try {
       const allergyOrError = await this.allergyServiceInstance.createAllergy(req.body as IAllergyDTO) as Result<IAllergyDTO>;
         
       if (allergyOrError.isFailure) {
-        return res.status(402).send();
+        return res.status(404).json({ message: "Creation failed" }); 
       }
 
       const allergyDTOResult = allergyOrError.getValue();
@@ -51,7 +51,7 @@ export default class AllergyController implements IAllergyController /* TODO: ex
       const allergyOrError = await this.allergyServiceInstance.updateAllergy(req.body as IAllergyDTO) as Result<IAllergyDTO>;
 
       if (allergyOrError.isFailure) {
-        return res.status(404).send();
+        return res.status(404).json({ message: "Update failed" });
       }
 
       const allergyDTOResult = allergyOrError.getValue();

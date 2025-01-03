@@ -20,10 +20,13 @@
     "outDir": "./build",
     "allowJs": true,
     "noEmit": false,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "strictFunctionTypes": false,
+    "noImplicitAny": false,
+    "skipLibCheck": true
   },
   "include": [
-    "./src/**/*", "index.js"
+    "./src/**/*", "index.js", "./tests/**/*"
   ],
   "exclude": [
     "node_modules",

@@ -34,7 +34,7 @@ export default class MedicalConditionController implements IMedicalConditionCont
       const medicalConditionOrError = await this.medicalConditionServiceInstance.createMedicalCondition(req.body as IMedicalConditionDTO) as Result<IMedicalConditionDTO>;
         
       if (medicalConditionOrError.isFailure) {
-        return res.status(402).send();
+        return res.status(402).json({ message: medicalConditionOrError.error });
       }
 
       const medicalConditionDTOResult = medicalConditionOrError.getValue();
@@ -50,7 +50,7 @@ export default class MedicalConditionController implements IMedicalConditionCont
       const medicalConditionOrError = await this.medicalConditionServiceInstance.updateMedicalCondition(req.body as IMedicalConditionDTO) as Result<IMedicalConditionDTO>;
 
       if (medicalConditionOrError.isFailure) {
-        return res.status(404).send();
+        return res.status(404).json({ message: medicalConditionOrError.error });  // Send status 404 for failed update
       }
 
       const medicalConditionDTOResult = medicalConditionOrError.getValue();

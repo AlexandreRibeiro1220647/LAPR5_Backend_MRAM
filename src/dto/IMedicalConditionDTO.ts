@@ -1,4 +1,3 @@
-
 export interface IMedicalConditionDTO {
 	code : string;
 	designation : string;
