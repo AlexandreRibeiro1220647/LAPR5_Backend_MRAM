@@ -26,6 +26,10 @@ export default {
    */
   jwtSecret: process.env.JWT_SECRET || "my sakdfho2390asjod$%jl)!sdjas0i secret",
 
+  AUTH0_DOMAIN: process.env.AUTH0_DOMAIN || "dev-05j84tecmi7hx6en.eu.auth0.com",
+  AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID || "aPDW8t4xJC8D3wDnyn8BCC9lpAilc9jq",
+  AUTH0_ROLES_CLAIM: process.env.AUTH0_ROLES_CLAIM || "https://hellth.com/claims/roles",
+
   /**
    * Used by winston logger
    */
