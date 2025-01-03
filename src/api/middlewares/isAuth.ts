@@ -1,35 +1,46 @@
 // remove by JRT : import jwt from 'express-jwt';
 var { expressjwt: jwt } = require("express-jwt");
+const jwksRsa = require('jwks-rsa');
 import config from '../../../config';
 
-/**
- * We are assuming that the JWT will come in a header with the form
- *
- * Authorization: Bearer ${JWT}
- *
- * But it could come in a query parameter with the name that you want like
- * GET https://my-bulletproof-api.com/stats?apiKey=${JWT}
- * Luckily this API follow _common sense_ ergo a _good design_ and don't allow that ugly stuff
- */
-const getTokenFromHeader = req => {
-  /**
-   * @TODO Edge and Internet Explorer do some weird things with the headers
-   * So I believe that this should handle more 'edge' cases ;)
-   */
-  if (
-    (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Token') ||
-    (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer')
-  ) {
-    return req.headers.authorization.split(' ')[1];
-  }
-  return null;
-};
+const isAuth = (requiredRoles = []) => {
+  // JWT validation middleware
+  const jwtMiddleware = jwt({
+    secret: jwksRsa.expressJwtSecret({
+      jwksUri: `https://${config.AUTH0_DOMAIN}/.well-known/jwks.json`
+    }),
+    audience: config.AUTH0_CLIENT_ID,
+    issuer: `https://${config.AUTH0_DOMAIN}/`,
+    algorithms: ['RS256']
+  });
 
-const isAuth = jwt({
-  secret: config.jwtSecret, // The _secret_ to sign the JWTs
-  userProperty: 'token', // Use req.token to store the JWT
-  getToken: getTokenFromHeader, // How to extract the JWT from the request
-  algorithms: ["HS256"],  // Added by JRT
-});
+  // Authorization middleware
+  return [
+    jwtMiddleware,
+    (req, res, next) => {
+
+      // Ensure the JWT token contains the necessary claims
+      const user = req.auth;
+
+      if (!user) {
+        return res.status(401).json({ message: 'User not authenticated' });
+      }
+
+      // Check if the user is email verified (note: email_verified is a boolean)
+      if (user.email_verified !== true) {
+        return res.status(401).json({ message: 'Email is not verified' });
+      }
+
+      // Check if the user has at least one of the required roles
+      const roles = user['https://hellth.com/claims/roles']; // Correct role claim path
+      if (!roles || !roles.some(role => requiredRoles.includes(role))) {
+        return res.status(403).json({ message: 'Forbidden: Insufficient role' });
+      }
+
+      // Allow the request to proceed if all checks pass
+      next();
+    }
+  ];
+};
 
 export default isAuth;
