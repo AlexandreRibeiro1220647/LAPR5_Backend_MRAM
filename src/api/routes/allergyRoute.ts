@@ -5,6 +5,7 @@ import { Container } from 'typedi';
 import IAllergyController from '../../controllers/IControllers/IAllergyController'; 
 
 import config from "../../../config";
+import middlewares from '../middlewares';
 
 const route = Router();
 
@@ -13,9 +14,9 @@ export default (app: Router) => {
 
   const ctrl = Container.get(config.controllers.allergy.name) as IAllergyController;
 
-  route.get('', (req, res, next) => ctrl.getAllergies(req, res, next) );
+  route.get('', middlewares.isAuth(["Admin", "Doctor"]), (req, res, next) => ctrl.getAllergies(req, res, next) );
 
-  route.post('',
+  route.post('', middlewares.isAuth(["Admin", "Doctor"]),
     celebrate({
       body: Joi.object({
         code: Joi.string().required(),
@@ -25,7 +26,7 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.createAllergy(req, res, next) );
 
-  route.put('',
+  route.put('', middlewares.isAuth(["Admin", "Doctor"]),
     celebrate({
       body: Joi.object({
         code: Joi.string().required(),
