@@ -94,5 +94,21 @@ export default class MedicalConditionRepo implements IMedicalConditionRepo {
       return [];
     }
   }  
+
+    public async findByCodeOrDesignation(code?: string, designation?: string): Promise<MedicalCondition[]> {
+      const query: any = {};
+      
+      if (code) query.code = code;
+      if (designation) query.designation = { $regex: designation, $options: 'i' }; 
+    
+      const medicalConsitionsRecords = await this.medicalConditionSchema.find(query);
+    
+      if (medicalConsitionsRecords.length > 0) {
+        return Promise.all(medicalConsitionsRecords.map(record => MedicalConditionMap.toDomain(record)));
+      } else {
+        return [];
+      }
+    }
+     
   
 }
