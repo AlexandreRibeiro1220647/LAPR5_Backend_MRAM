@@ -92,5 +92,20 @@ export default class AllergyRepo implements IAllergyRepo {
       return [];
     }
   }  
+ 
+  public async findByCodeOrDesignation(code?: string, designation?: string): Promise<Allergy[]> {
+    const query: any = {};
+    
+    if (code) query.code = code;
+    if (designation) query.designation = { $regex: designation, $options: 'i' }; // Busca case-insensitive
   
+    const allergyRecords = await this.allergySchema.find(query);
+  
+    if (allergyRecords.length > 0) {
+      return Promise.all(allergyRecords.map(record => AllergyMap.toDomain(record)));
+    } else {
+      return [];
+    }
+  }
+   
 }
