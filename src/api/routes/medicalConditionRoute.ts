@@ -37,4 +37,17 @@ export default (app: Router) => {
       }),
     }),
     (req, res, next) => ctrl.updateMedicalCondition(req, res, next) );
+  
+    route.get(
+      '/search',
+      middlewares.isAuth(["Admin", "Doctor"]),
+      celebrate({
+        query: Joi.object({
+          code: Joi.string().optional(),
+          designation: Joi.string().optional(),
+        }),
+      }),
+      (req, res, next) => ctrl.searchMedicalConditions(req, res, next)
+    );
+    
 };
