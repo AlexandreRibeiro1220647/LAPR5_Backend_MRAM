@@ -87,4 +87,22 @@ export default class AllergyService implements IAllergyService {
     }
   }
 
+  public async searchAllergies(code?: string, designation?: string): Promise<Result<IAllergyDTO[]>> {
+    try {
+      const allergies = await this.allergyRepo.findByCodeOrDesignation(code, designation);
+  
+      if (allergies.length === 0) {
+        return Result.fail<IAllergyDTO[]>("No allergies found");
+      }
+  
+      const allergyDTOResults = await Promise.all(
+        allergies.map(allergy => AllergyMap.toDTO(allergy))
+      );
+      return Result.ok<IAllergyDTO[]>(allergyDTOResults);
+    } catch (e) {
+      throw e;
+    }
+  }
+  
+
 }

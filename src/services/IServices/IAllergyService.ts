@@ -7,4 +7,6 @@ export default interface IAllergyService  {
 
   getAllergyById (allergyId: string): Promise<Result<IAllergyDTO>>;
   getAllergies(): Promise<Result<IAllergyDTO[]>>;
+
+  searchAllergies(code?: string, designation?: string): Promise<Result<IAllergyDTO[]>>;
 }
