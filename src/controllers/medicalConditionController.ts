@@ -60,4 +60,22 @@ export default class MedicalConditionController implements IMedicalConditionCont
       return next(e);
     }
   };
+
+
+  public async searchMedicalConditions(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { code, designation } = req.query;
+  
+      const result = await this.medicalConditionServiceInstance.searchMedicalConditions(code as string, designation as string);
+  
+      if (result.isFailure) {
+        return res.status(404).json({ message: "No results found" });
+      }
+  
+      return res.status(200).json(result.getValue());
+    } catch (e) {
+      return next(e);
+    }
+  }
+  
 }
