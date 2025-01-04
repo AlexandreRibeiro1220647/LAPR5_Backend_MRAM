@@ -32,6 +32,7 @@ describe('MedicalConditionController', function () {
     sandbox.restore();
   });
 
+
   it('should return all medical conditions successfully (integration test with stub)', async function () {
     // Arrange
     const conditions: IMedicalConditionDTO[] = [{
