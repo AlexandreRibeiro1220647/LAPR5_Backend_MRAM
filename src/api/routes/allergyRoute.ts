@@ -35,4 +35,14 @@ export default (app: Router) => {
       }),
     }),
     (req, res, next) => ctrl.updateAllergy(req, res, next) );
+
+    route.get('/search', middlewares.isAuth(["Admin", "Doctor"]), 
+  celebrate({
+    query: Joi.object({
+      code: Joi.string().optional(),
+      designation: Joi.string().optional(),
+    })
+  }), 
+  (req, res, next) => ctrl.searchAllergies(req, res, next));
+  
 };
