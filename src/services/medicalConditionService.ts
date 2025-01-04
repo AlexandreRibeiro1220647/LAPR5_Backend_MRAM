@@ -88,4 +88,23 @@ export default class MedicalConditionService implements IMedicalConditionService
     }
   }
 
+
+  public async searchMedicalConditions(code?: string, designation?: string): Promise<Result<IMedicalConditionDTO[]>> {
+    try {
+      const medicalConditions = await this.medicalConditionRepo.findByCodeOrDesignation(code, designation);
+  
+      if (medicalConditions.length === 0) {
+        return Result.fail<IMedicalConditionDTO[]>("No Medical Conditions found");
+      }
+  
+      const medicalConditionsDTOResults = await Promise.all(
+        medicalConditions.map(medicalCondition => MedicalConditionMap.toDTO(medicalCondition))
+      );
+      return Result.ok<IMedicalConditionDTO[]>(medicalConditionsDTOResults);
+    } catch (e) {
+      throw e;
+    }
+  }
+  
+
 }
