@@ -61,4 +61,22 @@ export default class AllergyController implements IAllergyController /* TODO: ex
       return next(e);
     }
   };
+
+  public async searchAllergies(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { code, designation } = req.query;
+  
+      const result = await this.allergyServiceInstance.searchAllergies(code as string, designation as string);
+  
+      if (result.isFailure) {
+        return res.status(404).json({ message: "No results found" });
+      }
+  
+      return res.status(200).json(result.getValue());
+    } catch (e) {
+      return next(e);
+    }
+  }
+  
+
 }
