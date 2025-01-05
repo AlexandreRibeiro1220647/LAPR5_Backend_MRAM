@@ -1,6 +1,5 @@
-import { Allergy } from '../domain/allergy/allergy';
-import {MedicalCondition} from "../domain/medicalCondition/medicalCondition";
-import {Entry} from "../domain/MedicalRecord/entry";
+import { Allergy } from '../domain/Allergy/allergy';
+import { MedicalCondition } from "../domain/MedicalCondition/medicalCondition";
 
 export interface IMedicalRecordPersistence {
   patient: string;
