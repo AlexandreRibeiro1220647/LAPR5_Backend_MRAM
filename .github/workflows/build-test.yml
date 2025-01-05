@@ -17,7 +17,9 @@ jobs:
         node-version: '18'
     - name: Install Dependencies
       run: npm install
-
+    - name: Build Project
+      run: npm run build
+      
   test:
     runs-on: ubuntu-latest
     steps:
