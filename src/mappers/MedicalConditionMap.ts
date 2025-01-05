@@ -16,7 +16,7 @@ export class MedicalConditionMap extends Mapper<MedicalCondition> {
     } as IMedicalConditionDTO;
   }
 
-  public static async toDomain (raw: any): Promise<MedicalCondition> {
+  public static toDomain (raw: any): MedicalCondition {
     const medicalConditionOrError = MedicalCondition.create({
       code: raw.code,
       designation: raw.designation,

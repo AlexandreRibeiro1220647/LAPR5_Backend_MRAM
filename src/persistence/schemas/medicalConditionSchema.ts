@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { IMedicalConditionPersistence } from '../../dataschema/IMedicalConditionPersistence';
 
-const MedicalCondition = new mongoose.Schema(
+export const MedicalCondition = new mongoose.Schema(
   {
     domainId: { 
       type: String,

@@ -1,7 +1,7 @@
 import { IAllergyPersistence } from '../../dataschema/IAllergyPersistence';
 import mongoose from 'mongoose';
 
-const Allergy = new mongoose.Schema(
+export const Allergy = new mongoose.Schema(
   {
     domainId: { 
       type: String,

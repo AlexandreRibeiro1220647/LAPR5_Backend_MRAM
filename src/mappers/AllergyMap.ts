@@ -16,7 +16,7 @@ export class AllergyMap extends Mapper<Allergy> {
     } as IAllergyDTO;
   }
 
-  public static async toDomain (raw: any): Promise<Allergy> {
+  public static toDomain (raw: any): Allergy {
     const allergyOrError = Allergy.create({
       code: raw.code,
       designation: raw.designation,
