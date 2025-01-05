@@ -33,7 +33,7 @@
   "dependencies": {
     "acorn": "^7.1.0",
     "acorn-jsx": "^5.1.0",
-    "agenda": "^2.0.2",
+    "agenda": "^2.3.0",
     "agendash": "^4.0.0",
     "argon2": "^0.21.0",
     "bcrypt-nodejs": "0.0.3",
